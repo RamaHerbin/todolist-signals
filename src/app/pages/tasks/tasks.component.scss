@@ -19,11 +19,34 @@
     width: 100%;
   }
 
+  .buttonsContainer {
+    margin-left: auto;
+    display: flex;
+    gap: 5px;
+  }
+
+  .editButton {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(236, 126, 0);
+    mat-icon {
+      margin: 0;
+    }
+  }
+
+  .validateButton {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(0, 190, 25);
+    mat-icon {
+      margin: 0;
+    }
+  }
+
   .deleteButton {
     display: flex;
     justify-content: center;
     background-color: red;
-    margin-left: auto;
     mat-icon {
       margin: 0;
     }

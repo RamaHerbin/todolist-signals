@@ -1,30 +1,37 @@
 <section class="tasks">
   <header>
     <h1>Tasks</h1>
+    <div class="tasks__toolbar">
+      <div class="tasks__addContainer">
+        <form class="tasks__addForm">
+          <mat-form-field class="tasks__addFormField">
+            <mat-label>Task name</mat-label>
+            <input
+              [(ngModel)]="inputAdd"
+              name="add"
+              type="text"
+              matInput
+              placeholder="Ex. my task name"
+            />
+          </mat-form-field>
+        </form>
+        <button
+          class="tasks__addButton"
+          mat-icon-button
+          aria-label="Example icon button with a vertical three dot icon"
+          (click)="
+            signalsService.saveTasks({
+              id: signalsService.tasks().length + 1,
+              name: inputAdd,
+              done: false
+            })
+          "
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
   </header>
-
-  <div class="tasks__addContainer">
-    <form class="tasks__addForm">
-      <mat-form-field class="tasks__addFormField">
-        <mat-label>Task name</mat-label>
-        <input
-          [(ngModel)]="inputAdd"
-          name="add"
-          type="text"
-          matInput
-          placeholder="Ex. my task name"
-        />
-      </mat-form-field>
-    </form>
-    <button
-      class="tasks__addButton"
-      mat-icon-button
-      aria-label="Example icon button with a vertical three dot icon"
-      (click)="addTask(inputAdd)"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
 
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
     <mat-tab label="All">
@@ -36,19 +43,51 @@
 
   <ng-template #myFragment let-pizzaTopping="topping">
     <ul class="tasks__ul">
-      @for (task of signalsService.tasks(); track task.name) {
+      @for (task of signalsService.tasks(); track task.id) {
       <li class="tasks__el">
         <mat-checkbox [(ngModel)]="task.done" class="example-margin">{{
           task.name
         }}</mat-checkbox>
-        <button
-          class="deleteButton"
-          mat-flat-button
-          aria-label="Example icon button with a delete icon"
-          (click)="deleteTask($index)"
-        >
-          <mat-icon>delete</mat-icon>
-        </button>
+        @if(task.isEdited) {
+        <input
+          [(ngModel)]="task.name"
+          name="edit"
+          type="text"
+          matInput
+          placeholder="Ex. my task name"
+        />
+        }
+
+        <div class="buttonsContainer">
+          @if(!task.isEdited) {
+          <button
+            class="editButton"
+            mat-flat-button
+            aria-label="Example icon button with a edit icon"
+            (click)="task.isEdited = true"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          } @else {
+          <button
+            class="validateButton"
+            mat-flat-button
+            aria-label="Example icon button with a edit icon"
+            (click)="signalsService.editTask(task); task.isEdited = false"
+          >
+            <mat-icon>check</mat-icon>
+          </button>
+          }
+
+          <button
+            class="deleteButton"
+            mat-flat-button
+            aria-label="Example icon button with a delete icon"
+            (click)="signalsService.deleteTask($index + 1)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </li>
       }
     </ul>

@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/tasks.model';
 import { CommonService } from '../../services/common.service';
+import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
 @Component({
   selector: 'app-tasks',
   standalone: true,
@@ -51,13 +52,17 @@ export class TasksComponent {
     console.log('index :>> ', index);
   }
 
-  public addTask(taskName: string) {
-    this.signalsService.tasks.update((tasks: Array<Task>) => [
-      ...tasks,
-      {
-        name: taskName,
-        done: false,
-      },
-    ]);
+  public onEdit(taskToEdit: Task) {
+    taskToEdit.isEdited = true;
   }
+
+  // public addTask(taskName: string) {
+  //   this.signalsService.tasks.update((tasks: Array<Task>) => [
+  //     ...tasks,
+  //     {
+  //       name: taskName,
+  //       done: false,
+  //     },
+  //   ]);
+  // }
 }
