@@ -1,0 +1,45 @@
+.tasks {
+  position: relative;
+
+  padding: 0 0 0 2rem;
+
+  display: flex;
+  flex-flow: column;
+
+  &__ul {
+    display: flex;
+    flex-flow: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  &__el {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .deleteButton {
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    margin-left: auto;
+    mat-icon {
+      margin: 0;
+    }
+  }
+
+  &__addContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__addForm,
+  &__addFormField {
+    width: 100%;
+  }
+
+  &__addButton {
+    margin-left: auto;
+  }
+}

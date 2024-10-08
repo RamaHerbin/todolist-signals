@@ -1,1 +1,56 @@
-<p>tasks works!</p>
+<section class="tasks">
+  <header>
+    <h1>Tasks</h1>
+  </header>
+
+  <div class="tasks__addContainer">
+    <form class="tasks__addForm">
+      <mat-form-field class="tasks__addFormField">
+        <mat-label>Task name</mat-label>
+        <input
+          [(ngModel)]="inputAdd"
+          name="add"
+          type="text"
+          matInput
+          placeholder="Ex. my task name"
+        />
+      </mat-form-field>
+    </form>
+    <button
+      class="tasks__addButton"
+      mat-icon-button
+      aria-label="Example icon button with a vertical three dot icon"
+      (click)="addTask(inputAdd)"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+    <mat-tab label="All">
+      <ng-container *ngTemplateOutlet="myFragment" />
+    </mat-tab>
+    <mat-tab label="Todo"> </mat-tab>
+    <mat-tab label="Done"> </mat-tab>
+  </mat-tab-group>
+
+  <ng-template #myFragment let-pizzaTopping="topping">
+    <ul class="tasks__ul">
+      @for (task of signalsService.tasks(); track task.name) {
+      <li class="tasks__el">
+        <mat-checkbox [(ngModel)]="task.done" class="example-margin">{{
+          task.name
+        }}</mat-checkbox>
+        <button
+          class="deleteButton"
+          mat-flat-button
+          aria-label="Example icon button with a delete icon"
+          (click)="deleteTask($index)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </li>
+      }
+    </ul>
+  </ng-template>
+</section>
