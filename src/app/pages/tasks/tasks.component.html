@@ -45,9 +45,12 @@
     <ul class="tasks__ul">
       @for (task of signalsService.tasks(); track task.id) {
       <li class="tasks__el">
-        <mat-checkbox [(ngModel)]="task.done" class="example-margin">{{
-          task.name
-        }}</mat-checkbox>
+        <mat-checkbox
+          (change)="signalsService.editTask(task)"
+          [(ngModel)]="task.done"
+          class="example-margin"
+          >{{ task.name }}</mat-checkbox
+        >
         @if(task.isEdited) {
         <input
           [(ngModel)]="task.name"
