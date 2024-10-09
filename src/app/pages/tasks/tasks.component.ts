@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/tasks.model';
 import { CommonService } from '../../services/common.service';
-import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
+
 @Component({
   selector: 'app-tasks',
   standalone: true,
@@ -36,6 +36,7 @@ import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
 })
 export class TasksComponent {
   @Input() myFragment: TemplateRef<unknown> | undefined;
+  selectedTab: number = 0;
 
   constructor() {}
 
@@ -43,26 +44,8 @@ export class TasksComponent {
   public signalsService = inject(CommonService);
 
   public ngOnInit() {
-    this.signalsService.getTasks();
+    if (this.signalsService.tasks().length == 0) {
+      this.signalsService.getTasks();
+    }
   }
-
-  // public tasks: Array<Task> = [];
-
-  public deleteTask(index: number) {
-    console.log('index :>> ', index);
-  }
-
-  public onEdit(taskToEdit: Task) {
-    taskToEdit.isEdited = true;
-  }
-
-  // public addTask(taskName: string) {
-  //   this.signalsService.tasks.update((tasks: Array<Task>) => [
-  //     ...tasks,
-  //     {
-  //       name: taskName,
-  //       done: false,
-  //     },
-  //   ]);
-  // }
 }

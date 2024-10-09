@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 import { Task } from '../models/tasks.model';
 import { compileClassMetadata } from '@angular/compiler';
 
@@ -9,6 +9,14 @@ export class CommonService {
   constructor() {}
 
   public tasks = signal<Task[]>([]);
+
+  public tasksDone: Signal<Task[]> = computed(() =>
+    this.tasks().filter((el) => el.done)
+  );
+
+  public tasksTodo: Signal<Task[]> = computed(() =>
+    this.tasks().filter((el) => !el.done)
+  );
 
   public async getTasks() {
     try {
