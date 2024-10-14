@@ -1,4 +1,12 @@
-import { Component, inject, Input, Signal, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  input,
+  Output,
+  Signal,
+  signal,
+} from '@angular/core';
 import { Task } from '../../models/tasks.model';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
@@ -28,7 +36,30 @@ import { MatTabsModule } from '@angular/material/tabs';
   styleUrl: './todolist.component.scss',
 })
 export class TodolistComponent {
-  @Input() public taskslist: Signal<Task[]> = signal<Task[]>([]);
+  public taskslist = input<Task[]>([]);
 
-  public signalsService = inject(CommonService);
+  @Output() public editTask = new EventEmitter<Task>(); // Emit for edit
+  @Output() public deleteTask = new EventEmitter<number>(); // Emit delete
+
+  public editedTasks: Set<number> = new Set();
+
+  public onEditTask(task: Task): void {
+    this.editTask.emit(task);
+  }
+
+  public onDeleteTask(taskId: number): void {
+    this.deleteTask.emit(taskId);
+  }
+
+  public startEditing(taskId: number): void {
+    this.editedTasks.add(taskId);
+  }
+
+  public stopEditing(taskId: number): void {
+    this.editedTasks.delete(taskId);
+  }
+
+  public isTaskEdited(taskId: number): boolean {
+    return this.editedTasks.has(taskId);
+  }
 }

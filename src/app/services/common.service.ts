@@ -1,24 +1,14 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Task } from '../models/tasks.model';
 import { compileClassMetadata } from '@angular/compiler';
+import { TasksStoreService } from './tasks-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
   constructor() {}
-
-  public tasks = signal<Task[]>([]);
-
-  public filter = signal<{ state: 'ALL' | 'DONE' | 'TODO' }>({ state: 'ALL' });
-
-  public tasksDone: Signal<Task[]> = computed(() =>
-    this.tasks().filter((el) => el.done)
-  );
-
-  public tasksTodo: Signal<Task[]> = computed(() =>
-    this.tasks().filter((el) => !el.done)
-  );
+  public tasksService = inject(TasksStoreService);
 
   public async getTasks() {
     try {
@@ -30,7 +20,7 @@ export class CommonService {
 
       const data = await response.json();
       console.log('data :>> ', data);
-      this.tasks.set([...this.tasks(), ...data]); // Update datas
+      this.tasksService.tasks.set([...this.tasksService.tasks(), ...data]); // Update datas
       return data;
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -39,7 +29,6 @@ export class CommonService {
   }
 
   public async saveTasks(taskToSave: Task) {
-    console.log('taskToSave :>> ', taskToSave);
     try {
       const response = await fetch('http://localhost:3001/todos', {
         method: 'POST',
@@ -55,7 +44,7 @@ export class CommonService {
       }
 
       const data = await response.json();
-      this.tasks.update((list) => [...list, taskToSave]); // Update datas
+      this.tasksService.tasks.update((list) => [...list, taskToSave]); // Update datas
       return data;
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -78,8 +67,10 @@ export class CommonService {
       }
 
       const data = await response.json();
-      const updatedTasks = this.tasks().filter((task) => task.id !== taskId);
-      this.tasks.set(updatedTasks);
+      const updatedTasks = this.tasksService
+        .tasks()
+        .filter((task) => task.id !== taskId);
+      this.tasksService.tasks.set(updatedTasks);
       return data;
     } catch (error) {
       console.error('Error fetching tasks:', error);

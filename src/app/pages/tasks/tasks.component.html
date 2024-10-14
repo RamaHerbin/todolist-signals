@@ -19,13 +19,7 @@
           class="tasks__addButton"
           mat-icon-button
           aria-label="Example icon button with a vertical three dot icon"
-          (click)="
-            signalsService.saveTasks({
-              id: signalsService.tasks().length + 1,
-              name: inputAdd,
-              done: false
-            })
-          "
+          (click)="addTask()"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -33,20 +27,22 @@
     </div>
   </header>
 
-  {{ selectedTab }}
-  <mat-tab-group
-    (selectedIndexChange)="selectedTab = $event"
-    mat-stretch-tabs="false"
-    mat-align-tabs="center"
-  >
-    <mat-tab label="All">
-      <app-todolist [taskslist]="signalsService.tasks"></app-todolist>
-    </mat-tab>
-    <mat-tab label="Todo">
-      <app-todolist [taskslist]="signalsService.tasksTodo"></app-todolist>
-    </mat-tab>
-    <mat-tab label="Done">
-      <app-todolist [taskslist]="signalsService.tasksDone"></app-todolist>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="tasks__buttonToggleContainer">
+    <mat-button-toggle-group
+      [formControl]="tabControl"
+      name="tab"
+      aria-label="Font Style"
+    >
+      <mat-button-toggle value="all">All</mat-button-toggle>
+      <mat-button-toggle value="todo">Todo</mat-button-toggle>
+      <mat-button-toggle value="done">Done</mat-button-toggle>
+    </mat-button-toggle-group>
+    <p>Chosen value is {{ tabControl.value }}</p>
+  </div>
+
+  <app-todolist
+    [taskslist]="tasksService.tasks()"
+    (editTask)="editTask($event)"
+    (deleteTask)="deleteTask($event)"
+  ></app-todolist>
 </section>

@@ -2,12 +2,12 @@
   @for (task of taskslist(); track task.id) {
   <li class="todolist__el">
     <mat-checkbox
-      (change)="signalsService.editTask(task)"
+      (change)="onEditTask(task)"
       [(ngModel)]="task.done"
       class="example-margin"
       >{{ task.name }}</mat-checkbox
     >
-    @if(task.isEdited) {
+    @if(isTaskEdited(task.id)) {
     <input
       [(ngModel)]="task.name"
       name="edit"
@@ -18,12 +18,12 @@
     }
 
     <div class="todolist__buttonsContainer">
-      @if(!task.isEdited) {
+      @if(!isTaskEdited(task.id)) {
       <button
         class="editButton"
         mat-flat-button
         aria-label="Example icon button with a edit icon"
-        (click)="task.isEdited = true"
+        (click)="startEditing(task.id)"
       >
         <mat-icon>edit</mat-icon>
       </button>
@@ -32,7 +32,7 @@
         class="validateButton"
         mat-flat-button
         aria-label="Example icon button with a edit icon"
-        (click)="signalsService.editTask(task); task.isEdited = false"
+        (click)="onEditTask(task); stopEditing(task.id)"
       >
         <mat-icon>check</mat-icon>
       </button>
@@ -42,7 +42,7 @@
         class="deleteButton"
         mat-flat-button
         aria-label="Example icon button with a delete icon"
-        (click)="signalsService.deleteTask($index + 1)"
+        (click)="onDeleteTask(task.id)"
       >
         <mat-icon>delete</mat-icon>
       </button>
