@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { Task } from '../../models/tasks.model';
 import { CommonService } from '../../services/common.service';
+import {TodolistComponent} from '../../components/todolist/todolist.component';
 
 @Component({
   selector: 'app-tasks',
@@ -30,6 +31,7 @@ import { CommonService } from '../../services/common.service';
     MatButtonModule,
     MatIconModule,
     CommonModule,
+    TodolistComponent,
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',

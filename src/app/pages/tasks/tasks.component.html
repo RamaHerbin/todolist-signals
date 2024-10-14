@@ -40,64 +40,13 @@
     mat-align-tabs="center"
   >
     <mat-tab label="All">
-      <ng-container *ngTemplateOutlet="todolist; context: selectedTab" />
+      <app-todolist [taskslist]="signalsService.tasks"></app-todolist>
     </mat-tab>
-    <mat-tab label="Todo"> {{ signalsService.tasksDone() | json }} </mat-tab>
-    <mat-tab label="Done"> </mat-tab>
+    <mat-tab label="Todo">
+      <app-todolist [taskslist]="signalsService.tasksTodo"></app-todolist>
+    </mat-tab>
+    <mat-tab label="Done">
+      <app-todolist [taskslist]="signalsService.tasksDone"></app-todolist>
+    </mat-tab>
   </mat-tab-group>
-
-  <ng-template #todolist let-pizzaTopping="topping">
-    <ul class="tasks__ul">
-      @for (task of signalsService.tasks(); track task.id) {
-      <li class="tasks__el">
-        <mat-checkbox
-          (change)="signalsService.editTask(task)"
-          [(ngModel)]="task.done"
-          class="example-margin"
-          >{{ task.name }}</mat-checkbox
-        >
-        @if(task.isEdited) {
-        <input
-          [(ngModel)]="task.name"
-          name="edit"
-          type="text"
-          matInput
-          placeholder="Ex. my task name"
-        />
-        }
-
-        <div class="buttonsContainer">
-          @if(!task.isEdited) {
-          <button
-            class="editButton"
-            mat-flat-button
-            aria-label="Example icon button with a edit icon"
-            (click)="task.isEdited = true"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          } @else {
-          <button
-            class="validateButton"
-            mat-flat-button
-            aria-label="Example icon button with a edit icon"
-            (click)="signalsService.editTask(task); task.isEdited = false"
-          >
-            <mat-icon>check</mat-icon>
-          </button>
-          }
-
-          <button
-            class="deleteButton"
-            mat-flat-button
-            aria-label="Example icon button with a delete icon"
-            (click)="signalsService.deleteTask($index + 1)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </li>
-      }
-    </ul>
-  </ng-template>
 </section>

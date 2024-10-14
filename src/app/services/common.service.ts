@@ -10,6 +10,8 @@ export class CommonService {
 
   public tasks = signal<Task[]>([]);
 
+  public filter = signal<{ state: 'ALL' | 'DONE' | 'TODO' }>({ state: 'ALL' });
+
   public tasksDone: Signal<Task[]> = computed(() =>
     this.tasks().filter((el) => el.done)
   );
