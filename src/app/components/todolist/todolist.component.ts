@@ -3,6 +3,7 @@ import {
   EventEmitter,
   inject,
   input,
+  output,
   Output,
   Signal,
   signal,
@@ -36,10 +37,10 @@ import { MatTabsModule } from '@angular/material/tabs';
   styleUrl: './todolist.component.scss',
 })
 export class TodolistComponent {
-  public taskslist = input<Task[]>([]);
+  taskslist = input<Task[]>([]);
 
-  @Output() public editTask = new EventEmitter<Task>(); // Emit for edit
-  @Output() public deleteTask = new EventEmitter<number>(); // Emit delete
+  editTask = output<Task>(); // Emit for edit
+  deleteTask = output<number>(); // Emit delete
 
   public editedTasks: Set<number> = new Set();
 
