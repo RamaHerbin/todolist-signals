@@ -1,5 +1,4 @@
-import {Component, input, model} from '@angular/core';
-
+import { Component, input, model } from '@angular/core';
 
 @Component({
   styleUrl: './counter.component.scss',
@@ -10,17 +9,16 @@ import {Component, input, model} from '@angular/core';
     <span>Current Count: {{ counter() }}</span>
     <button (click)="increment()">+</button>
   `,
-  standalone: true
+  standalone: true,
 })
 export class CounterComponent {
-  counter = model(0)
-  hello = input('Hi', {alias: 'greeting'})
-
+  counter = model(0);
+  hello = input('Hi', { alias: 'greeting' });
   increment() {
-    this.counter.set(this.counter() + 1)
+    this.counter.set(this.counter() + 1);
   }
 
   decrement() {
-    this.counter.set(this.counter() - 1)
+    this.counter.set(this.counter() - 1);
   }
 }
