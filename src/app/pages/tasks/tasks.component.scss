@@ -5,8 +5,22 @@
 
   display: flex;
   flex-flow: column;
+  max-width: 1000px;
 
   &__buttonToggleContainer {
     margin: 0 auto;
+  }
+
+  &__addContainer {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__addButton {
+    top: 8px;
+
+    mat-icon {
+      margin: 0;
+    }
   }
 }

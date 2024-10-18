@@ -4,7 +4,7 @@ import { Component, input, model } from '@angular/core';
   styleUrl: './counter.component.scss',
   selector: 'app-counter',
   template: `
-    <span>{{ hello() }}</span>
+    <span>Hi</span>
     <button (click)="decrement()">-</button>
     <span>Current Count: {{ counter() }}</span>
     <button (click)="increment()">+</button>

@@ -51,9 +51,10 @@ export class TasksComponent {
 
   public taskslist: Task[] = [];
 
-  public ngOnInit() {
+  public async ngOnInit() {
     if (this.tasksService.tasks().length == 0) {
-      this.commonService.getTasks();
+      await this.commonService.getTasks();
+      this.updateTaskList()
     }
 
     this.tabControl.valueChanges.subscribe(() => {
@@ -71,6 +72,8 @@ export class TasksComponent {
     } else if (filterValue === 'done') {
       this.taskslist = this.tasksService.tasksDone();
     }
+    console.log(this.taskslist)
+
   }
 
   public addTask() {

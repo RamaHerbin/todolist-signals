@@ -17,7 +17,7 @@
         </form>
         <button
           class="tasks__addButton"
-          mat-icon-button
+          mat-stroked-button
           aria-label="Example icon button with a vertical three dot icon"
           (click)="addTask()"
         >
@@ -41,7 +41,7 @@
   </div>
 
   <app-todolist
-    [taskslist]="tasksService.tasks()"
+    [taskslist]="taskslist"
     (editTask)="editTask($event)"
     (deleteTask)="deleteTask($event)"
   ></app-todolist>

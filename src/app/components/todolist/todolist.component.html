@@ -1,4 +1,4 @@
-<ul class="todolist">
+<ul role="todolist" class="todolist">
   @for (task of taskslist(); track task.id) {
   <li class="todolist__el">
     <mat-checkbox
@@ -21,6 +21,7 @@
       @if(!isTaskEdited(task.id)) {
       <button
         class="editButton"
+        role="edit-button"
         mat-flat-button
         aria-label="Example icon button with a edit icon"
         (click)="startEditing(task.id)"
@@ -30,6 +31,7 @@
       } @else {
       <button
         class="validateButton"
+        role="validate-button"
         mat-flat-button
         aria-label="Example icon button with a edit icon"
         (click)="onEditTask(task); stopEditing(task.id)"

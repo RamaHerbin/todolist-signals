@@ -1,26 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Task } from '../../models/tasks.model';
 
 import { TodolistComponent } from './todolist.component';
 import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import createSpy = jasmine.createSpy;
 
 describe('TodolistComponent', () => {
-  // let component: TodolistComponent;
-  // let fixture: ComponentFixture<TodolistComponent>;
-
-  // beforeEach(async () => {
-  //   await TestBed.configureTestingModule({
-  //     imports: [TodolistComponent],
-  //   }).compileComponents();
-  //
-  //   fixture = TestBed.createComponent(TodolistComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
-
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
 
   const mockTasks: Task[] = [
     {
@@ -39,11 +24,44 @@ describe('TodolistComponent', () => {
     console.log('value :>> ', value);
   };
 
-  // it('should display the list if there is at least one element', async () => {
-  //   await render(TodolistComponent, { inputs: { mockTasks } });
-  //
-  //   let result = screen.getByText('Do the dishes');
-  //
-  //   expect(result).toBeTruthy();
-  // });
+  it('should create the component', async () => {
+    await render(TodolistComponent);
+    // screen.debug();
+    const element = screen.getByRole('todolist');
+    expect(element).toBeInTheDocument();
+  });
+
+  it('should display the list if there is at least one element', async () => {
+    await render(TodolistComponent, { inputs: {taskslist: mockTasks } });
+
+    let result = screen.getByText('Do the dishes');
+
+    expect(result).toBeTruthy();
+  });
+
+  it('should emit editTask event when editing a task', async () => {
+    const mockTask: Task[] = [
+      { id: 1, name: 'Do the dishes', done: false },
+    ];
+    const editSpy = jasmine.createSpy('editTask');
+
+    const { fixture } = await render(TodolistComponent, {
+      inputs: { taskslist: mockTask },
+      on: {
+        editTask: editSpy
+      }
+    });
+
+    // Click on edit button
+    const editButton = screen.getByRole('edit-button');
+    editButton.click();
+
+    // wait for changes
+    fixture.detectChanges();
+
+    const validateButton = screen.getByRole('validate-button');
+    validateButton.click();
+
+    expect(editSpy).toHaveBeenCalledWith(mockTask[0]);
+  });
 });

@@ -16,6 +16,7 @@ describe('Counter', () => {
       },
     });
 
+
     expect(screen.getByText('Current Count: 5')).toBeVisible();
     expect(screen.getByText('Hello Alias!')).toBeVisible();
   });

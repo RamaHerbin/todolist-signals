@@ -98,10 +98,10 @@ export class CommonService {
       }
 
       const data = await response.json();
-      // const updatedTasks = this.tasks().filter(
-      //   (task) => task.id !== taskToUpdate.id
-      // );
-      // this.tasks.update((list) => [...updatedTasks, taskToUpdate]); // Update datas
+      const updatedTasks = this.tasksService.tasks().filter(
+        (task:Task) => task.id !== taskToUpdate.id
+      );
+      this.tasksService.tasks.update((list: Task[]) => [...updatedTasks, taskToUpdate]); // Update datas
 
       return data;
     } catch (error) {
