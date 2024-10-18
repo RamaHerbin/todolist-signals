@@ -64,4 +64,24 @@ describe('TodolistComponent', () => {
 
     expect(editSpy).toHaveBeenCalledWith(mockTask[0]);
   });
+
+  it('should emit delete event when deleting a task', async () => {
+    const mockTask: Task[] = [
+      { id: 1, name: 'Do the dishes', done: false },
+    ];
+    const deleteSpy = jasmine.createSpy('deleteTask');
+
+    const { fixture } = await render(TodolistComponent, {
+      inputs: { taskslist: mockTask },
+      on: {
+        deleteTask: deleteSpy
+      }
+    });
+
+    // Click on edit button
+    const deleteButton = screen.getByRole('delete-button');
+    deleteButton.click();
+
+    expect(deleteSpy).toHaveBeenCalledWith(mockTask[0].id);
+  });
 });
