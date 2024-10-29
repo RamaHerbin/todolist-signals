@@ -23,7 +23,7 @@
         class="editButton"
         role="edit-button"
         mat-flat-button
-        aria-label="Example icon button with a edit icon"
+        aria-label="Edit"
         (click)="startEditing(task.id)"
       >
         <mat-icon>edit</mat-icon>
@@ -33,7 +33,7 @@
         class="validateButton"
         role="validate-button"
         mat-flat-button
-        aria-label="Example icon button with a edit icon"
+        aria-label="Validate"
         (click)="onEditTask(task); stopEditing(task.id)"
       >
         <mat-icon>check</mat-icon>
@@ -44,7 +44,7 @@
         class="deleteButton"
         role="delete-button"
         mat-flat-button
-        aria-label="Example icon button with a delete icon"
+        aria-label="Delete"
         (click)="onDeleteTask(task.id)"
       >
         <mat-icon>delete</mat-icon>

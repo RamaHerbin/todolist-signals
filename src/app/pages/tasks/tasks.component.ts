@@ -20,6 +20,7 @@ import { Task } from '../../models/tasks.model';
 import { CommonService } from '../../services/common.service';
 import { TodolistComponent } from '../../components/todolist/todolist.component';
 import { TasksStoreService } from '../../services/tasks-store.service';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-tasks',
@@ -36,13 +37,14 @@ import { TasksStoreService } from '../../services/tasks-store.service';
     CommonModule,
     TodolistComponent,
     MatButtonToggleModule,
+    MatProgressSpinner,
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss',
 })
 export class TasksComponent {
   public inputAdd = '';
-  tabControl = new FormControl('all');
+  tabControl = new FormControl('all'); //signal avec computed ?
 
   constructor() {}
 
@@ -64,6 +66,9 @@ export class TasksComponent {
 
   public updateTaskList() {
     const filterValue = this.tabControl.value;
+
+    this.tasksService.filter.set(filterValue?.toUpperCase() as any);
+
 
     if (filterValue === 'all') {
       this.taskslist = this.tasksService.tasks();

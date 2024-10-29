@@ -1,6 +1,6 @@
 <section class="tasks">
   <header>
-    <h1>Tasks</h1>
+    <h1>🗒️ Tasks</h1>
     <div class="tasks__toolbar">
       <div class="tasks__addContainer">
         <form class="tasks__addForm">
@@ -40,9 +40,14 @@
     <p>Chosen value is {{ tabControl.value }}</p>
   </div>
 
+@if(taskslist.length > 0) {
   <app-todolist
     [taskslist]="taskslist"
     (editTask)="editTask($event)"
     (deleteTask)="deleteTask($event)"
   ></app-todolist>
+} @else {
+  <mat-spinner></mat-spinner>
+}
+
 </section>

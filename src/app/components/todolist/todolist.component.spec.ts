@@ -32,9 +32,11 @@ describe('TodolistComponent', () => {
   });
 
   it('should display the list if there is at least one element', async () => {
-    await render(TodolistComponent, { inputs: {taskslist: mockTasks } });
+    await render(TodolistComponent, { inputs: {taskslist: [{name: 'task-1'}] } });
 
     let result = screen.getByText('Do the dishes');
+
+    screen.getByRole('listitem', {name: /dishes/i});
 
     expect(result).toBeTruthy();
   });
@@ -55,6 +57,8 @@ describe('TodolistComponent', () => {
     // Click on edit button
     const editButton = screen.getByRole('edit-button');
     editButton.click();
+
+    screen.getByRole('button', { name: /edit/i });
 
     // wait for changes
     fixture.detectChanges();

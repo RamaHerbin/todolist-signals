@@ -18,4 +18,12 @@ export class TasksStoreService {
   public tasksTodo: Signal<Task[]> = computed(() =>
     this.tasks().filter((el) => !el.done)
   );
+
+  public filteredTasks = computed(() => {
+    const {state } = this.filter();
+
+    if(state === 'ALL') return this.tasks();
+
+    return this.tasks().filter((el) => state === 'DONE' && el.done || state === 'TODO' && !el.done);
+  });
 }
